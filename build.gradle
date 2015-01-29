@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+group = 'glbd'
+version = '0.1'
+mainClassName = 'glbd.GLBUtil'
+
+repositories {
+  mavenCentral()
+}
+
+manifest {
+  attributes 'Main-Class' : 'glbd.GLBUtil'
+}
+
+sourceSets {
+  main {
+    resources {
+      srcDir 'src/resources'
+    }
+  }
+}
+
+dependencies {
+  compile "com.almworks.sqlite4java:sqlite4java:1.0.392"
+  compile "net.sf.jopt-simple:jopt-simple:4.8"
+  compile "org.slf4j:slf4j-api:1.7.10"
+  compile "org.slf4j:slf4j-log4j12:1.7.10"
+  runtime group: "com.almworks.sqlite4java",
+              name: "libsqlite4java-linux-amd64",
+              version: "1.0.392", ext: "so"
+  testCompile "junit:junit:4.+"
+  testRuntime group: "com.almworks.sqlite4java",
+              name: "libsqlite4java-linux-amd64",
+              version: "1.0.392", ext: "so"
+}
+
+tasks.withType(Test) {
+  systemProperty "java.library.path", file("../lib")
+}
