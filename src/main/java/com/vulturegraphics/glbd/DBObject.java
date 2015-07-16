@@ -8,9 +8,4 @@ public abstract class DBObject {
     final long getID() {
         return ID;
     }
-
-    @Override
-    public int hashCode() {
-        return (int) ID;
-    }
 }
