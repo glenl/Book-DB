@@ -1,17 +1,12 @@
-package glbd;
+package com.vulturegraphics.glbd;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import com.almworks.sqlite4java.SQLiteConnection;
 import com.almworks.sqlite4java.SQLiteException;
 import com.almworks.sqlite4java.SQLiteQueue;
-import com.almworks.sqlite4java.SQLiteJob;
-//import java.lang.InterruptedException;
 
 class DBase {
     File dbPath = null;
@@ -22,6 +17,11 @@ class DBase {
         String path = Config.getInstance().getProperty("glbd.dbpath");
         log.info("db file is " + path);
         dbPath = new File(path);
+    }
+
+    /** Access to the singleton */
+    public static DBase getInstance() {
+        return DBConnectionHolder.INSTANCE;
     }
 
     public String getTimestamp() {
@@ -36,9 +36,5 @@ class DBase {
     /** Singleton implementation */
     private static class DBConnectionHolder {
         private static final DBase INSTANCE = new DBase();
-    }
-    /** Access to the singleton */
-    public static DBase getInstance() {
-        return DBConnectionHolder.INSTANCE;
     }
 }
