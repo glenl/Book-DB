@@ -3,7 +3,7 @@ apply plugin: 'idea'
 apply plugin: 'application'
 
 group = 'com.vulturegraphics.glbd'
-version = '0.1'
+version = '0.2'
 mainClassName = 'com.vulturegraphics.glbd.GLBUtil'
 
 repositories {
@@ -17,7 +17,12 @@ manifest {
 sourceSets {
   main {
     resources {
-      srcDir 'src/resources'
+      srcDir 'src/main/resources'
+    }
+  }
+  test {
+    resources {
+      srcDir 'src/test/resources'
     }
   }
 }
