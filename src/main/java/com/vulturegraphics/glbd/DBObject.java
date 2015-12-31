@@ -4,11 +4,11 @@ package com.vulturegraphics.glbd;
  * Abstract class for all database objects.
  */
 public abstract class DBObject {
-    long ID;
-    DBObject(long p_id) {
+    int ID;
+    DBObject(int p_id) {
         ID = p_id;
     }
-    final long getID() {
+    final int getID() {
         return ID;
     }
 }

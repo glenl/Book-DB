@@ -23,19 +23,9 @@ sourceSets {
 }
 
 dependencies {
-  compile "com.almworks.sqlite4java:sqlite4java:1.0.392"
   compile "net.sf.jopt-simple:jopt-simple:4.8"
   compile "org.slf4j:slf4j-api:1.7.10"
   compile "org.slf4j:slf4j-log4j12:1.7.10"
-  runtime group: "com.almworks.sqlite4java",
-              name: "libsqlite4java-linux-amd64",
-              version: "1.0.392", ext: "so"
+  compile 'org.xerial:sqlite-jdbc:3.8.11.2'
   testCompile "junit:junit:4.+"
-  testRuntime group: "com.almworks.sqlite4java",
-              name: "libsqlite4java-linux-amd64",
-              version: "1.0.392", ext: "so"
-}
-
-tasks.withType(JavaExec) {
-  systemProperty "java.library.path", file("build/install/glbd/lib")
 }
