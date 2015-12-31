@@ -1,16 +1,16 @@
-package glbd;
+package com.vulturegraphics.glbd;
 
-import org.junit.*;
+
 import java.util.List;
 import java.lang.InterruptedException;
 import com.almworks.sqlite4java.SQLiteConnection;
 import com.almworks.sqlite4java.SQLiteException;
 import com.almworks.sqlite4java.SQLiteQueue;
 import com.almworks.sqlite4java.SQLiteJob;
+import junit.framework.TestCase;
 
-public class AuthorTest {
-    
-    @Test
+public class AuthorTest extends TestCase{
+
     public void testSingle() throws SQLiteException, InterruptedException {
         SQLiteQueue q = DBase.getInstance().getQueue();
         Author a = q.execute(new SQLiteJob<Author>() {
@@ -23,10 +23,9 @@ public class AuthorTest {
                 }
             }).complete();
         q.stop(true).join();
-        Assert.assertTrue(a != null && a.toString().length() > 0);
+        assertTrue(a != null && a.toString().length() > 0);
     }
 
-    @Test
     public void testMultiple() throws SQLiteException, InterruptedException {
         SQLiteQueue q = DBase.getInstance().getQueue();
         List<Author> alist = q.execute(new SQLiteJob< List<Author> >() {
@@ -35,7 +34,7 @@ public class AuthorTest {
                 }
             }).complete();
         q.stop(true).join();
-        Assert.assertTrue(alist != null);
-        Assert.assertTrue(alist.size() > 1);
+        assertTrue(alist != null);
+        assertTrue(alist.size() > 1);
     }
 }

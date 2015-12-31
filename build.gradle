@@ -1,17 +1,17 @@
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'application'
 
-group = 'glbd'
+group = 'com.vulturegraphics.glbd'
 version = '0.1'
-mainClassName = 'glbd.GLBUtil'
+mainClassName = 'com.vulturegraphics.glbd.GLBUtil'
 
 repositories {
   mavenCentral()
 }
 
 manifest {
-  attributes 'Main-Class' : 'glbd.GLBUtil'
+  attributes 'Main-Class' : 'com.vulturegraphics.glbd.GLBUtil'
 }
 
 sourceSets {
@@ -36,6 +36,6 @@ dependencies {
               version: "1.0.392", ext: "so"
 }
 
-tasks.withType(Test) {
-  systemProperty "java.library.path", file("../lib")
+tasks.withType(JavaExec) {
+  systemProperty "java.library.path", file("build/install/glbd/lib")
 }

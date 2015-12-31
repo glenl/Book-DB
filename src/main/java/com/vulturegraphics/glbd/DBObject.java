@@ -1,5 +1,8 @@
 package com.vulturegraphics.glbd;
 
+/**
+ * Abstract class for all database objects.
+ */
 public abstract class DBObject {
     long ID;
     DBObject(long p_id) {

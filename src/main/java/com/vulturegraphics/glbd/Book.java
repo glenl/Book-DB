@@ -7,6 +7,10 @@ import com.almworks.sqlite4java.SQLiteConnection;
 import com.almworks.sqlite4java.SQLiteStatement;
 import com.almworks.sqlite4java.SQLiteException;
 
+/**
+ * A Book wraps a row in a database table representing a single book. Duplicates are not
+ * checked since two authors may write a book with the same title.
+ */
 class Book extends DBObject {
     private static final String X_BOOK_INSERT = "INSERT"
             + " INTO glb_book (title) VALUES(?)";
@@ -25,7 +29,7 @@ class Book extends DBObject {
      * @param conn The connection object
      * @param title String title to add to database table
      * @return Book object
-     * @throws SQLiteException
+     * @throws SQLiteException on any error
      */
     public static Book addTitle(SQLiteConnection conn,
                                 String title) throws SQLiteException {
@@ -45,7 +49,7 @@ class Book extends DBObject {
      * @param conn The connection object
      * @param author Find books written by this author
      * @return List of books
-     * @throws SQLiteException
+     * @throws SQLiteException on any error
      */
     public static List<Book> find(SQLiteConnection conn, Author author) throws SQLiteException {
         List<Book> bookList = new LinkedList<>();

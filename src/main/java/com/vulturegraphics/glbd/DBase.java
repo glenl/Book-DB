@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import com.almworks.sqlite4java.SQLiteException;
 import com.almworks.sqlite4java.SQLiteQueue;
 
+/**
+ * Application database methods.
+ */
 class DBase {
     File dbPath = null;
     DateFormat isoDTFormat = null;
@@ -15,11 +18,10 @@ class DBase {
     private DBase() {
         Logger log = LoggerFactory.getLogger(DBase.class);
         String path = Config.getInstance().getProperty("glbd.dbpath");
-        log.info("db file is " + path);
+        log.debug("db file is " + path);
         dbPath = new File(path);
     }
 
-    /** Access to the singleton */
     public static DBase getInstance() {
         return DBConnectionHolder.INSTANCE;
     }
@@ -33,7 +35,6 @@ class DBase {
         return queue.start();
     }
 
-    /** Singleton implementation */
     private static class DBConnectionHolder {
         private static final DBase INSTANCE = new DBase();
     }
