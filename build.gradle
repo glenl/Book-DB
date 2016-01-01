@@ -34,3 +34,9 @@ dependencies {
   compile 'org.xerial:sqlite-jdbc:3.8.11.2'
   testCompile "junit:junit:4.+"
 }
+
+test {
+  testLogging {
+    events 'passed'
+  }
+}
