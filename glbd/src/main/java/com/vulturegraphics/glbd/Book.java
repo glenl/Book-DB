@@ -12,10 +12,10 @@ import java.sql.SQLException;
  * A Book wraps a row in a database table representing a single book. Duplicates are not
  * checked since two authors may write a book with the same title.
  */
-class Book extends DBObject {
+public class Book extends DBObject {
     private String title;
 
-    private Book(int p_ID, String p_title) {
+    Book(int p_ID, String p_title) {
         super(p_ID);
         title = p_title;
     }

@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
  * Author wraps an instance of a database table row representing a single author.
  */
 
-class Author extends DBObject {
+public class Author extends DBObject {
 
     private int ID;
     private String name;
     private int alias_for;
 
-    private Author(int p_ID, String p_name, int p_alias) {
+    Author(int p_ID, String p_name, int p_alias) {
         super(p_ID);
         name = p_name;
         alias_for = p_alias;

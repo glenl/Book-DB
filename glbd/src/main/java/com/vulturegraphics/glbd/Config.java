@@ -7,7 +7,7 @@ import java.util.Properties;
 /**
  * Configuration details for glbd application
  */
-class Config {
+public class Config {
     private static String CONFIG_PROPERTIES = "/glbd.properties";
     private Properties properties;
 

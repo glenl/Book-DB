@@ -1,42 +1,57 @@
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'application'
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'idea'
+  group = 'com.vulturegraphics.glbd'
+  version = '0.2'
 
-group = 'com.vulturegraphics.glbd'
-version = '0.2'
-mainClassName = 'com.vulturegraphics.glbd.GLBUtil'
-
-repositories {
-  mavenCentral()
-}
-
-manifest {
-  attributes 'Main-Class' : 'com.vulturegraphics.glbd.GLBUtil'
-}
-
-sourceSets {
-  main {
-    resources {
-      srcDir 'src/main/resources'
-    }
+  repositories {
+    mavenCentral()
   }
+
+  dependencies {
+    compile "net.sf.jopt-simple:jopt-simple:4.8"
+    compile "org.slf4j:slf4j-api:1.7.10"
+    compile "org.slf4j:slf4j-log4j12:1.7.10"
+    compile 'org.xerial:sqlite-jdbc:3.8.11.2'
+    testCompile "junit:junit:4.+"
+    testCompile "junit:junit:4.+"
+  }
+
   test {
-    resources {
-      srcDir 'src/test/resources'
+    testLogging {
+      events 'passed'
+    }
+  }
+}  
+
+project (':glbd') {
+  group = 'mutopia.core'
+  version = '0.2'
+  jar {
+    baseName = 'gl-glbd'
+  }
+  sourceSets {
+    main {
+      resources {
+        srcDir 'src/main/resources'
+      }
+    }
+    test {
+      resources {
+        srcDir 'src/test/resources'
+      }
     }
   }
 }
 
-dependencies {
-  compile "net.sf.jopt-simple:jopt-simple:4.8"
-  compile "org.slf4j:slf4j-api:1.7.10"
-  compile "org.slf4j:slf4j-log4j12:1.7.10"
-  compile 'org.xerial:sqlite-jdbc:3.8.11.2'
-  testCompile "junit:junit:4.+"
-}
 
-test {
-  testLogging {
-    events 'passed'
+project (':glbook') {
+  apply plugin: 'application'
+  dependencies {
+    compile project(':glbd')
+  }
+  mainClassName = 'GLBUtil'
+  manifest {
+    attributes 'Main-Class' : 'GLBUtil'
   }
 }
