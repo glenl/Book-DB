@@ -1,1 +1,1 @@
-include ':glbd', ':glbook'
+include ':glbd', ':glbutil'

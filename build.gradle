@@ -45,7 +45,7 @@ project (':glbd') {
 }
 
 
-project (':glbook') {
+project (':glbutil') {
   apply plugin: 'application'
   dependencies {
     compile project(':glbd')
