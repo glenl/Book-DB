@@ -10,22 +10,34 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Author wraps an instance of a database table row representing a single author.
+/** Author table representation. An Author object is a single row in
+ *  the database {@code glb_author table}. Names are set simply as,
+ *  "{@code LASTNAME, FIRSTNAME}". The name may be a pseudonym, in
+ *  which case, the {@code alias_for} variable will designate the
+ *  row-id of the author's real name.
  */
-
 public class Author extends DBObject {
 
     private int ID;
     private String name;
     private int alias_for;
 
+    /** Construct an author, typically called from a database lookup.
+     *  @param p_ID    database row-id
+     *  @param p_name  author's name
+     *  @param p_alias row-id of author's real name (this author is a pseudonym)
+     */
     Author(int p_ID, String p_name, int p_alias) {
         super(p_ID);
         name = p_name;
         alias_for = p_alias;
     }
 
+    /** Construct an author from a database connection and id.
+     *  @param conn  connection to the database
+     *  @param p_ID  id of author to lookup
+     *  @throws SQLException on any database error
+     */
     public Author(Connection conn, int p_ID) throws SQLException {
         super(p_ID);
         final String Q_AUTHOR =
@@ -68,14 +80,15 @@ public class Author extends DBObject {
         return name;
     }
 
-    /**
-     * Add an author (or alias) to the database. Author names have the form,
-     *   <P>"LAST, FIRST"</P>
+    /** Add an author (or alias) to the database.
+     *  Author names have the form "{@code LAST, FIRST}".
      *
      * @param conn The SQL connection
      * @param author_name Name of author
-     * @param alias_for If <code>author_name</code> is an alias, this is the author to which the alias refers.
-     *                  If provided, the referenced author must already exist. May be null.
+     * @param alias_for If {@code author_name} is an alias, this is
+     *                  the author to which the alias refers. If
+     *                  provided, the referenced author must already
+     *                  exist. May be null.
      * @return The created Author object, or null on any failure.
      * @throws SQLException May typically occur if a uniqueness constraint fails.
      */
@@ -118,12 +131,15 @@ public class Author extends DBObject {
         }
     }
 
-    /**
-     * Search the <code>glb_author</code> table for an <strong>exact</strong> match to an author's name.
-     * @param conn The SQL Connection object.
-     * @param author_name Name of author to match.
-     * @return If found, the <code>Author</code> object filled in from the DB, null otherwise.
-     * @throws SQLException on any error
+    /** Exact author search.
+     *  Search the <code>glb_author</code> table for an
+     *  <strong>exact</strong> match to an author's name.
+     *
+     *  @param conn        The SQL Connection object.
+     *  @param author_name Name of author to match.
+     *  @return If found, the <code>Author</code> object filled in
+     *          from the DB, null otherwise.
+     *  @throws SQLException on any error
      */
     public static Author findExact(Connection conn,
                                    String author_name) throws SQLException {
@@ -171,16 +187,17 @@ public class Author extends DBObject {
         return alist;
     }
 
-    /**
-     * A book can have many authors, an author can write many books.
-     * This M:M relationship is acchieved by a mapping table,
-     * <code>glb_book_author</code>, which binds a single author to a
-     * single book. The same book reference can be bound to other
-     * authors.
-     * @param conn The SQL Connection
-     * @param b The book  to add the database, associating to this Author instance
-     * @return The row id of the new book entry
-     * @throws SQLException Typically a constraint failure.
+    /** Add a book for this author.
+     *  A book can have many authors, an author can write many books.
+     *  This M:M relationship is acchieved by a mapping table,
+     *  <code>glb_book_author</code>, which binds a single author to a
+     *  single book. The same book reference can be bound to other
+     *  authors.
+     *  @param conn The SQL Connection
+     *  @param b    The book  to add the database, associating to this
+     *              Author instance
+     *  @return The row id of the new book entry
+     *  @throws SQLException Typically a constraint failure.
      */
     public int addBook(Connection conn, Book b) throws SQLException {
         final String X_BOOK_INSERT =
@@ -202,12 +219,15 @@ public class Author extends DBObject {
         return 0;
     }
 
-    /**
-     * A convenience routine to find all books associated with this author.
-     * @param conn The SQL Connection
-     * @return A list of books by this author, possibly an empty list if no books found.
-     * @throws SQLException Would be rare since you would have not been able to construct this Author
-     * instance if it wasn't in the database.
+    /** Find books by this author.
+     *  A convenience routine to find all books associated with this author.
+     *
+     *  @param conn The SQL Connection
+     *  @return A list of books by this author, possibly an empty list
+     *          if no books found.
+     *  @throws SQLException Would be rare since you would not have
+     *        been able to construct this Author instance if it wasn't
+     *        in the database.
      */
     public List<Book> bibliography(Connection conn) throws SQLException {
         return Book.find(conn, this);

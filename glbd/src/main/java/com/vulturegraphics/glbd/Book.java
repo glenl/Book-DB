@@ -8,9 +8,10 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * A Book wraps a row in a database table representing a single book. Duplicates are not
- * checked since two authors may write a book with the same title.
+/** Book table representation.
+ *  A Book object wraps a row in a database table representing a
+ *  single book. Duplicates are allowed (two authors may write a book
+ *  with the same title.)
  */
 public class Book extends DBObject {
     private String title;
@@ -63,18 +64,18 @@ public class Book extends DBObject {
         return null;
     }
 
-    /**
-     * Find books by a given author
-     * @param conn The connection object
-     * @param author Find books written by this author
-     * @return List of books
-     * @throws SQLException on any error
+    /** Find books by a given author.
+     *  @param conn   DB Connection object
+     *  @param author Author to lookup
+     *  @return List of books
+     *  @throws SQLException on any database error
      */
-    public static List<Book> find(Connection conn, Author author) throws SQLException {
+    public static List<Book> find(Connection conn,
+                                  Author author) throws SQLException {
         final String Q_BOOK_FIND = "SELECT"
             + " _id,title FROM glb_book WHERE _id IN"
             + " (SELECT book_id FROM glb_book_author WHERE author_id=?)";
-        List<Book> bookList = new LinkedList<>();
+        List<Book> bookList = new LinkedList<Book>();
         PreparedStatement st = conn.prepareStatement(Q_BOOK_FIND);
         st.setInt(1, author.getID());
         ResultSet rs = st.executeQuery();
