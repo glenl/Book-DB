@@ -1,6 +1,13 @@
-*~
-**/build
-**/.gradle
+.gradle
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# ignore local idea project files
 *.iml
 *.ipr
 *.iws
