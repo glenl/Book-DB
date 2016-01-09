@@ -25,10 +25,10 @@ allprojects {
 }  
 
 project (':glbd') {
-  group = 'mutopia.core'
+  group = 'glbd.core'
   version = '0.2'
   jar {
-    baseName = 'gl-glbd'
+    baseName = 'glbd'
   }
   sourceSets {
     main {
